@@ -1,10 +1,8 @@
 from pathlib import Path
 import os
 
-# BASE DIRECTORY
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECURITY
 SECRET_KEY = 'django-insecure-atif-final-commercial-key'
 DEBUG = True
 ALLOWED_HOSTS = ['*']  
@@ -17,14 +15,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'cloudinary_storage', # 👈 Storage ke liye zaroori
+    'cloudinary',         # 👈 Storage ke liye zaroori
     'main',
     'rest_framework',
 ]
 
-# MIDDLEWARE
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # 👈 Static files ke liye zaroori line
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -35,7 +34,6 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'myshop.urls'
 
-# TEMPLATES
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -54,7 +52,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'myshop.wsgi.application'
 
-# DATABASE
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -62,29 +59,29 @@ DATABASES = {
     }
 }
 
-# PASSWORD VALIDATORS
-AUTH_PASSWORD_VALIDATORS = [
-    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
-]
-
 # LANGUAGE & TIME
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'Asia/Karachi'
 USE_I18N = True
 USE_TZ = True
 
-# STATIC FILES (Railway/Production Settings)
+# --- STATIC & MEDIA SETTINGS (Cloudinary + Whitenoise) ---
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / 'main' / 'static']
-STATIC_ROOT = BASE_DIR / 'staticfiles' # 👈 Ye line Railway ko batati hai static files kahan hain
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# DEFAULT PRIMARY KEY
-import os
+# Cloudinary Setup for persistent Media (Images)
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.getenv('CLOUDINARY_API_SECRET'),
+}
 
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+MEDIA_URL = '/media/'
+
+# --- STRIPE KEYS ---
 STRIPE_PUBLIC_KEY = os.getenv('STRIPE_PUBLIC_KEY')
 STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY')
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
