@@ -5,7 +5,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-atif-final-commercial-key'
 DEBUG = True
+
+# --- SECURITY SETTINGS ---
 ALLOWED_HOSTS = ['*']  
+
+# 👈 Ye line aapka 403 Forbidden error fix karegi
+CSRF_TRUSTED_ORIGINS = [
+    'https://modest-ambition-production.up.railway.app',
+]
 
 # APPLICATIONS
 INSTALLED_APPS = [
@@ -15,8 +22,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'cloudinary_storage', # 👈 Storage ke liye zaroori
-    'cloudinary',         # 👈 Storage ke liye zaroori
+    'cloudinary_storage', 
+    'cloudinary',         
     'main',
     'rest_framework',
 ]
@@ -70,7 +77,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# Cloudinary Setup for persistent Media (Images)
+# Cloudinary Setup
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
     'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
