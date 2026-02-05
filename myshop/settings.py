@@ -1,21 +1,23 @@
 from pathlib import Path
 import os
-import stripe  # 👈 Stripe import karna zaroori hai
+import stripe
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-atif-final-commercial-key'
 DEBUG = True
+
+# Isko '*' hi rehne dein taake website har jagah khul sake
 ALLOWED_HOSTS = ['*']  
 
-# --- ADMIN PANEL FIX ---
-# Is se aapka "Forbidden (403)" wala masla khatam ho jayega
+# --- ADMIN PANEL & 403 FORBIDDEN FIX ---
+# Maine aapka naya Koyeb URL yahan add kar diya hai
 CSRF_TRUSTED_ORIGINS = [
+    'https://minor-valentine-atif-projects-fda25377.koyeb.app', # 👈 Koyeb fix
     'https://modest-ambition-production.up.railway.app',
     'https://my-jango-shop-production.up.railway.app',
 ]
 
-# APPLICATIONS
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -31,7 +33,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware', # 👈 Static files ke liye
+    'whitenoise.middleware.WhiteNoiseMiddleware', 
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -67,13 +69,11 @@ DATABASES = {
     }
 }
 
-# LANGUAGE & TIME
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'Asia/Karachi'
 USE_I18N = True
 USE_TZ = True
 
-# --- STATIC & MEDIA SETTINGS ---
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
@@ -88,8 +88,9 @@ DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 MEDIA_URL = '/media/'
 
 # --- STRIPE SETTINGS (FIXED) ---
+# Ye variables Koyeb ke dashboard se keys uthayenge
 STRIPE_PUBLIC_KEY = os.getenv('STRIPE_PUBLIC_KEY')
 STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY')
-stripe.api_key = STRIPE_SECRET_KEY  # 👈 Ye line Stripe error khatam karegi
+stripe.api_key = STRIPE_SECRET_KEY  # 👈 Stripe error fix
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
