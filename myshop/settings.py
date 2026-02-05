@@ -1,17 +1,18 @@
 from pathlib import Path
 import os
+import stripe  # 👈 Stripe import karna zaroori hai
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-atif-final-commercial-key'
 DEBUG = True
-
-# --- SECURITY SETTINGS ---
 ALLOWED_HOSTS = ['*']  
 
-# 👈 Ye line aapka 403 Forbidden error fix karegi
+# --- ADMIN PANEL FIX ---
+# Is se aapka "Forbidden (403)" wala masla khatam ho jayega
 CSRF_TRUSTED_ORIGINS = [
     'https://modest-ambition-production.up.railway.app',
+    'https://my-jango-shop-production.up.railway.app',
 ]
 
 # APPLICATIONS
@@ -30,7 +31,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware', # 👈 Static files ke liye
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -72,12 +73,11 @@ TIME_ZONE = 'Asia/Karachi'
 USE_I18N = True
 USE_TZ = True
 
-# --- STATIC & MEDIA SETTINGS (Cloudinary + Whitenoise) ---
+# --- STATIC & MEDIA SETTINGS ---
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# Cloudinary Setup
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
     'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
@@ -87,8 +87,9 @@ CLOUDINARY_STORAGE = {
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 MEDIA_URL = '/media/'
 
-# --- STRIPE KEYS ---
+# --- STRIPE SETTINGS (FIXED) ---
 STRIPE_PUBLIC_KEY = os.getenv('STRIPE_PUBLIC_KEY')
 STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY')
+stripe.api_key = STRIPE_SECRET_KEY  # 👈 Ye line Stripe error khatam karegi
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
