@@ -1,0 +1,8 @@
+<div class="container py-5">
+    <h2>Join Atif Shop Market</h2>
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn btn-primary">Sign Up</button>
+    </form>
+</div>
