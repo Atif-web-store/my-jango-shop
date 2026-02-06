@@ -1,6 +1,8 @@
 from django.urls import path, include
 from . import views
 from django.shortcuts import render
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     # Home Page aur Search logic
@@ -18,3 +20,6 @@ urlpatterns = [
     path('cancel/', lambda request: render(request, 'cancel.html'), name='cancel'),
     path('documentation/', lambda request: render(request, 'documentation.html'), name='docs'),
 ]
+
+# Ye line images ko website par dikhane ke liye aapke code ke saath add kar di hai
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
