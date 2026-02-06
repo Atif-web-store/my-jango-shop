@@ -3,22 +3,33 @@ from django.conf import settings
 from django.shortcuts import render, redirect
 from .models import Product
 
+# Stripe key settings se uthayi gayi hai
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 def home(request):
-    # --- SEARCH LOGIC (Step 4) ---
-    query = request.GET.get('q') # Home.html ke search input ka naam 'q' hai
+    """
+    Step 4: Search functionality logic.
+    Ye logic home page par products ko filter karti hai.
+    """
+    query = request.GET.get('q') # 'q' search input ka naam hai jo home.html mein hai
+    
     if query:
+        # Agar user search kare toh matching products dikhao
         products = Product.objects.filter(name__icontains=query)
     else:
+        # Warna saare products dikhao
         products = Product.objects.all()
     
     return render(request, 'home.html', {'products': products})
 
 def create_checkout_session(request, product_id):
+    """
+    Step 4: Professional Payment Flow.
+    Live domain URLs set kiye gaye hain taake error na aaye.
+    """
     product = Product.objects.get(id=product_id)
     
-    # Koyeb ka live URL taake payment ke baad sahi page khule
+    # Aapka live Koyeb URL
     domain = "https://minor-valentine-atif-projects-fda25377.koyeb.app"
     
     session = stripe.checkout.Session.create(
@@ -29,12 +40,12 @@ def create_checkout_session(request, product_id):
                 'product_data': {
                     'name': product.name,
                 },
-                'unit_amount': int(product.price * 100), 
+                'unit_amount': int(product.price * 100), # Amount cents mein convert ki gayi hai
             },
             'quantity': 1,
         }],
         mode='payment',
-        # Success aur Cancel URLs ko live domain par set kiya hai
+        # Payment ke baad in paths par redirect hoga
         success_url=domain + '/success/', 
         cancel_url=domain + '/cancel/',
     )
