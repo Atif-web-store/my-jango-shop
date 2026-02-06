@@ -10,34 +10,20 @@
     <style>
         :root { --primary-color: #2c3e50; --accent-color: #e74c3c; --success-color: #27ae60; --whatsapp-color: #25d366; }
         body { background-color: #f8f9fa; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        
-        /* Navbar Upgrade */
         .navbar { background-color: var(--primary-color) !important; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        .navbar-brand { font-size: 1.5rem; letter-spacing: 1px; }
-
-        /* Hero Section */
         .hero-section { 
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
-            background-size: cover; background-position: center; color: white; padding: 100px 0; margin-bottom: 50px; text-align: center;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1350&q=80');
+            background-size: cover; background-position: center; color: white; padding: 100px 0; text-align: center;
         }
-
-        /* Product Cards Upgrade */
         .product-card { border: none; border-radius: 15px; overflow: hidden; transition: all 0.4s ease; background: #fff; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
         .product-card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.15); }
         .product-img-container { height: 250px; overflow: hidden; position: relative; }
         .product-img-container img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
         .product-card:hover img { transform: scale(1.1); }
-        
-        .badge-new { position: absolute; top: 10px; right: 10px; background: var(--accent-color); color: white; padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; }
-        
-        /* Payment Buttons */
         .btn-whatsapp { background-color: var(--whatsapp-color); color: white; border-radius: 25px; font-weight: 600; border: none; }
-        .btn-whatsapp:hover { background-color: #128c7e; color: white; transform: scale(1.02); }
         .btn-buy-now { background: var(--success-color); border: none; color: white; border-radius: 25px; font-weight: 600; }
-        .btn-buy-now:hover { background: #219150; box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3); }
-        
-        .local-pay-box { background: #fff3cd; border: 1px dashed #ffc107; border-radius: 12px; padding: 12px; font-size: 0.85rem; }
-        .video-container { border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.2); margin-bottom: 50px; }
+        .local-pay-box { background: #fff3cd; border: 1px dashed #ffc107; border-radius: 12px; padding: 12px; font-size: 0.85rem; cursor: pointer; transition: 0.3s; }
+        .local-pay-box:hover { background: #ffeeba; }
     </style>
 </head>
 <body>
@@ -45,16 +31,13 @@
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
         <div class="container">
             <a class="navbar-brand fw-bold" href="/"><i class="fas fa-shopping-bag me-2"></i>ATIF SHOP MARKET</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
-                    <li class="nav-item"><a class="nav-link" href="/documentation/">Documentation</a></li>
+                    <li class="nav-item"><a class="nav-link text-white" href="/documentation/">Read Documentation</a></li>
                 </ul>
                 <form class="d-flex me-3" action="/" method="GET">
                     <div class="input-group">
-                        <input name="q" class="form-control border-0" type="search" placeholder="Search..." style="border-radius: 20px 0 0 20px;">
+                        <input name="q" class="form-control border-0" type="search" placeholder="Search products..." style="border-radius: 20px 0 0 20px;">
                         <button class="btn btn-light" type="submit" style="border-radius: 0 20px 20px 0;"><i class="fas fa-search"></i></button>
                     </div>
                 </form>
@@ -73,34 +56,20 @@
         <div class="container">
             <h1 class="display-3 fw-bold mb-3">Upgrade Your Lifestyle</h1>
             <p class="lead mb-4">Discover premium products at the best prices in Pakistan.</p>
-            <a href="#collection" class="btn btn-danger btn-lg px-5 py-3 rounded-pill">Shop Now</a>
         </div>
     </header>
 
-    <div class="container">
-        <div class="text-center mb-4">
-            <h2 class="fw-bold">How to Order (Demo Video)</h2>
-        </div>
-        <div class="video-container mx-auto" style="max-width: 800px;">
-            <div class="ratio ratio-16x9">
-                <iframe src="https://www.youtube.com/embed/your-video-id" title="Demo Video" allowfullscreen></iframe>
-            </div>
-        </div>
-    </div>
-
-    <div class="container" id="collection">
-        <h2 class="fw-bold mb-5">Latest Collection</h2>
-        
+    <div class="container mt-5" id="collection">
+        <h2 class="fw-bold mb-5 text-center">Latest Collection</h2>
         <div class="row">
             {% for product in products %}
             <div class="col-lg-4 col-md-6 mb-5">
                 <div class="card h-100 product-card">
                     <div class="product-img-container">
-                        <span class="badge-new">New Arrival</span>
                         {% if product.image %}
                             <img src="{{ product.image.url }}" alt="{{ product.name }}">
                         {% else %}
-                            <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Product Image">
+                            <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=80" alt="Product Image">
                         {% endif %}
                     </div>
                     
@@ -110,7 +79,7 @@
                         <h4 class="fw-bold mb-4" style="color: var(--primary-color)">Rs. {{ product.price }}</h4>
                         
                         <div class="d-grid gap-2">
-                            <a href="https://wa.me/923000000000?text=Salam,%20I%20want%20to%20buy%20{{ product.name }}" class="btn btn-whatsapp py-2">
+                            <a href="https://wa.me/923075530176?text=Salam, I want to buy {{ product.name }}" class="btn btn-whatsapp py-2">
                                 <i class="fab fa-whatsapp me-2"></i>Order via WhatsApp
                             </a>
                             
@@ -118,18 +87,15 @@
                                 <i class="fas fa-credit-card me-2"></i>Pay with Card (Stripe)
                             </a>
 
-                            <div class="local-pay-box mt-2 text-dark">
-                                <p class="mb-1 fw-bold"><i class="fas fa-university me-1"></i> Local Transfer:</p>
-                                <span>JazzCash/EasyPaisa: <strong>03xx-xxxxxxx</strong></span>
-                            </div>
+                            <a href="https://wa.me/923075530176?text=Salam, I have sent payment for {{ product.name }}" style="text-decoration: none;">
+                                <div class="local-pay-box mt-2 text-dark">
+                                    <p class="mb-1 fw-bold"><i class="fas fa-university me-1"></i> Local Transfer:</p>
+                                    <span>JazzCash/EasyPaisa: <strong>03075530176</strong></span>
+                                </div>
+                            </a>
                         </div>
                     </div>
                 </div>
-            </div>
-            {% empty %}
-            <div class="col-12 text-center py-5">
-                <i class="fas fa-box-open fa-4x text-muted mb-3"></i>
-                <h3>No Products Found</h3>
             </div>
             {% endfor %}
         </div>
@@ -138,13 +104,8 @@
     <footer class="bg-dark text-white py-5 mt-5">
         <div class="container text-center">
             <h4 class="fw-bold mb-4">ATIF SHOP MARKET</h4>
-            <div class="mb-4">
-                <a href="#" class="text-white me-4"><i class="fab fa-facebook fa-lg"></i></a>
-                <a href="#" class="text-white me-4"><i class="fab fa-instagram fa-lg"></i></a>
-                <a href="https://wa.me/923000000000" class="text-white"><i class="fab fa-whatsapp fa-lg"></i></a>
-            </div>
             <p>Need help? <a href="/documentation/" class="text-warning">Read Documentation</a></p>
-            <p class="text-muted small">&copy; 2026 Atif Shop Market Pakistan. All rights reserved.</p>
+            <p class="text-muted small">&copy; 2026 Atif Shop Market Pakistan.</p>
         </div>
     </footer>
 
