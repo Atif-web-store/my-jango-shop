@@ -10,14 +10,16 @@ DEBUG = True
 # Isko '*' hi rehne dein taake website har jagah khul sake
 ALLOWED_HOSTS = ['*']  
 
-# --- ADMIN PANEL & 403 FORBIDDEN FIX ---
-# Maine aapka naya Koyeb URL yahan add kar diya hai
+# --- ADMIN PANEL & 403 FORBIDDEN FIX (FINAL VERSION) ---
+# Humne yahan wildcard add kiya hai taake koi bhi Koyeb URL block na ho
 CSRF_TRUSTED_ORIGINS = [
-    'https://minor-valentine-atif-projects-fda25377.koyeb.app', # 👈 Koyeb fix
+    'https://*.koyeb.app',
+    'https://minor-valentine-atif-projects-fda25377.koyeb.app',
     'https://modest-ambition-production.up.railway.app',
     'https://my-jango-shop-production.up.railway.app',
 ]
 
+# APPLICATIONS
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -69,11 +71,13 @@ DATABASES = {
     }
 }
 
+# LANGUAGE & TIME
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'Asia/Karachi'
 USE_I18N = True
 USE_TZ = True
 
+# --- STATIC & MEDIA SETTINGS ---
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
