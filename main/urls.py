@@ -3,9 +3,14 @@ from . import views
 from django.shortcuts import render
 
 urlpatterns = [
+    # Home Page aur Search logic
     path('', views.home, name='home'),
+    
+    # User Authentication (Signup aur Login)
     path('signup/', views.signup, name='signup'),
-    path('accounts/', include('django.contrib.auth.urls')), # Login/Logout handles
+    path('accounts/', include('django.contrib.auth.urls')),
+    
+    # Stripe Payment ka rasta
     path('buy/<int:product_id>/', views.create_checkout_session, name='buy'),
     
     # Success, Cancel aur Documentation ke raste
